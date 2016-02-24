@@ -62,14 +62,22 @@ $ERRORS = array();
 include "helper.php";
 include_once "mdl/harcerze.php";
 $harcerze = new Harcerze();
+include_once "mdl/czyny.php";
+$czyny = new Czyny();
+include_once "mdl/kategorie.php";
+$kategorie = new Kategorie();
 
 $action = 'index';
 if (isset($_GET['action']) && preg_match('/^[[:alnum:]_]*$/ui', $_GET['action']) && file_exists("ctl/$_GET[action].php"))
 	$action = $_GET['action'];
-	
-include "ctl/$action.php";
 
-if (file_exists("tpl/$_GET[action].php"))
+$ctl = function() {
+	global $ERRORS, $action, $harcerze, $czyny, $kategorie;
+	include "ctl/$action.php";
+};
+$ctl();
+
+if (file_exists("tpl/$action.php"))
 	include "tpl/$action.php";
 
 ?>

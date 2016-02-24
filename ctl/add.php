@@ -6,10 +6,9 @@ if (!login_user_is_admin()) {
 }
 
 if (count($_POST) > 0) {
-	$harcerze->create_user(value('pseudonim'), value('haslo'), value('email'), value('uprawnienia'));
+	$czyny->add(value('nazwa'), value('poziom'), value('bm'), value('bw'), value('kategoria'));
 	if (count($ERRORS) == 0) {
 		clear_values();
 	}
 }
 
-?>

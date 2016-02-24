@@ -1,7 +1,7 @@
 <div id="main">
 	<div id="left">
 		<?php if (login_user_is_admin()): ?>
-			<a href="?action=login">Dodaj nowy czyn</a>
+			<a href="?action=add">Dodaj nowy czyn</a>
 		<?php endif ?>
 	</div>
 	<div id="right">

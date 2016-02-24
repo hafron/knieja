@@ -18,7 +18,7 @@ class Harcerze extends DB {
 		$pseudonim = $this->escape($pseudonim);
 		
 		$login_row = $this->querySingle("SELECT pseudonim, haslo, email, uprawnienia FROM harcerze WHERE pseudonim=$pseudonim");
-		if (count($login_row) == 0) {
+		if (empty($login_row)) {
 			$ERRORS['login_user_no_exists'] = '';
 			return NULL;
 		} elseif (!password_verify($haslo, $login_row['haslo'])) {
@@ -41,7 +41,7 @@ class Harcerze extends DB {
 		
 		$login_row = $this->querySingle("SELECT pseudonim FROM harcerze WHERE pseudonim=$pseudonim");
 		
-		if (count($login_row) > 0) {
+		if (!empty($login_row)) {
 			$ERRORS['users_user_exists'] = '';
 			return;
 		}
