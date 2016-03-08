@@ -4,7 +4,7 @@
 	<div class="error">Podałeś niepoprawne hasło.</div>
 <?php endif ?>
 
-<form action="?action=login" method="post">
+<form action="?action=zaloguj" method="post">
 	<label for="pseudonim">Pseudonim:</label>
 	<input id="pseudonim" name="pseudonim" type="text" value="<?php echo value('pseudonim') ?>" />
 	<label for="haslo">Hasło:</label>

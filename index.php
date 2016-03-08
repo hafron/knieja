@@ -66,13 +66,15 @@ include_once "mdl/czyny.php";
 $czyny = new Czyny();
 include_once "mdl/kategorie.php";
 $kategorie = new Kategorie();
+include_once "mdl/czyny_harcerze.php";
+$czyny_harcerze = new Czyny_Harcerze();
 
 $action = 'index';
 if (isset($_GET['action']) && preg_match('/^[[:alnum:]_]*$/ui', $_GET['action']) && file_exists("ctl/$_GET[action].php"))
 	$action = $_GET['action'];
 
 $ctl = function() {
-	global $ERRORS, $action, $harcerze, $czyny, $kategorie;
+	global $ERRORS, $action, $harcerze, $czyny, $kategorie, $czyny_harcerze;
 	include "ctl/$action.php";
 };
 $ctl();

@@ -34,4 +34,26 @@ class Kategorie extends DB {
 		$swiatlo = (int)$swiatlo;
 		$this->query("INSERT INTO kategorie(nazwa, swiatlo) VALUES ($nazwa, $swiatlo)");
 	}
+	
+	function update($id, $nazwa, $swiatlo) {
+		global $ERRORS;
+		if (!login_user_is_admin())
+			return;
+		$id = (int)$id;
+		$nazwa = $this->escape($nazwa);
+		$swiatlo = (int)$swiatlo;
+		$this->query("UPDATE kategorie SET nazwa=$nazwa, swiatlo=$swiatlo WHERE id=$id");
+	}
+	
+	function delete($id) {
+		global $ERRORS, $czyny;
+		if (!login_user_is_admin())
+			return;
+		$id = (int)$id;
+		if ($czyny->count_get($id) > 0) {
+			$ERRORS['kategorie_delete_czyny_exists'] = '';
+			return;
+		}
+		$this->query("DELETE FROM kategorie WHERE id=$id");
+	}
 }
