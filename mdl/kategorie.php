@@ -12,9 +12,16 @@ class Kategorie extends DB {
 		$this->query($createq);
 	}
 	
-	function get($swiatlo) {
-		$swiatlo = (int)$swiatlo;
-		return $this->query("SELECT id, nazwa FROM kategorie WHERE swiatlo=$swiatlo");
+	function get($swiatlo='') {
+		$where = '';
+		if ($swiatlo != '') {
+			$swiatlo = (int)$swiatlo;
+
+			if ($swiatlo >= 1 && $swiatlo <= 4)
+				$where = "WHERE swiatlo=$swiatlo";
+		}
+
+		return $this->query("SELECT id, swiatlo, nazwa FROM kategorie $where ORDER BY swiatlo, nazwa");
 	}
 	
 	function get_all() {
@@ -30,8 +37,19 @@ class Kategorie extends DB {
 		global $ERRORS;
 		if (!login_user_is_admin())
 			return;
-		$nazwa = $this->escape($nazwa);
+		
+		$nazwa = trim($nazwa);
 		$swiatlo = (int)$swiatlo;
+		
+		if ($nazwa == '')
+			$ERRORS['kategorie_nazwa_not_empty'] = '';
+		if ($swiatlo < 1 || $swiatlo > 4)
+			$ERRORS['kategorie_swiatlo_1_4'] = '';
+
+		if (count($ERRORS) > 0)
+			return;
+		
+		$nazwa = $this->escape($nazwa);
 		$this->query("INSERT INTO kategorie(nazwa, swiatlo) VALUES ($nazwa, $swiatlo)");
 	}
 	
@@ -39,9 +57,20 @@ class Kategorie extends DB {
 		global $ERRORS;
 		if (!login_user_is_admin())
 			return;
+			
+		$nazwa = trim($nazwa);
+		$swiatlo = (int)$swiatlo;
+		
+		if ($nazwa == '')
+			$ERRORS['kategorie_nazwa_not_empty'] = '';
+		if ($swiatlo < 1 || $swiatlo > 4)
+			$ERRORS['kategorie_swiatlo_1_4'] = '';
+
+		if (count($ERRORS) > 0)
+			return;
+	
 		$id = (int)$id;
 		$nazwa = $this->escape($nazwa);
-		$swiatlo = (int)$swiatlo;
 		$this->query("UPDATE kategorie SET nazwa=$nazwa, swiatlo=$swiatlo WHERE id=$id");
 	}
 	

@@ -25,10 +25,46 @@ class Czyny extends DB {
 		return $result['num_rows'];
 	}
 	
-	function get_all() {
+	function get_all($swiatlo = '') {
+		$swiatlo = (int)$swiatlo;
+		$where = '';
+		if ($swiatlo >= 1 && $swiatlo <= 4)
+			$where = "WHERE swiatlo=$swiatlo";
+		
 		return $this->query("SELECT czyny.id, czyny.nazwa, czyny.poziom, czyny.kategoria, kategorie.swiatlo, czyny.opis
-					FROM czyny JOIN kategorie ON czyny.kategoria = kategorie.id");
+					FROM czyny JOIN kategorie ON czyny.kategoria = kategorie.id $where");
 	}
+	
+	function get_light($swiatlo, $harcerz='') {
+		$swiatlo = (int)$swiatlo;
+		
+		$where = '';
+		if ($swiatlo >= 1 && $swiatlo <= 4)
+			$where = "WHERE swiatlo=$swiatlo";
+		
+		if ($harcerz != '') {
+			$harcerz = (int)$harcerz;
+			if ($where == '')
+				$where = "WHERE ";
+			else
+				$where .= " AND ";
+			
+			$where .= "czyny_harcerze.harcerz = $harcerz";
+			
+			return $this->query("SELECT czyny.id, czyny.nazwa, czyny.poziom, czyny.kategoria, kategorie.swiatlo,
+					kategorie.nazwa AS kategoria, czyny.opis
+					FROM czyny	JOIN kategorie ON czyny.kategoria = kategorie.id
+							JOIN czyny_harcerze ON czyny.id = czyny_harcerze.czyn
+					$where
+					ORDER BY kategorie.swiatlo, kategorie.nazwa, czyny.nazwa, czyny.poziom");
+		}
+		return $this->query("SELECT czyny.id, czyny.nazwa, czyny.poziom, czyny.kategoria, kategorie.swiatlo,
+					kategorie.nazwa AS kategoria, czyny.opis
+					FROM czyny JOIN kategorie ON czyny.kategoria = kategorie.id
+					$where
+					ORDER BY kategorie.swiatlo, kategorie.nazwa, czyny.nazwa, czyny.poziom");
+	}
+	
 	
 	function get_one($id) {
 		$id = (int)$id;
@@ -38,18 +74,33 @@ class Czyny extends DB {
 	
 	function add($nazwa, $poziom, $opis, $kategoria) {
 		global $ERRORS, $kategorie;
+		
 		if (!login_user_is_admin())
 			return;
-		$kategoria = (int)$kategoria;
-		$kat_row = $kategorie->get_one($kategoria);
-		if (empty($kat_row)) {
-			$ERRORS['czyny_add_kategoria_no_exists'] = '';
-			return;
-		}
-		$nazwa = $this->escape($nazwa);
+			
+		$nazwa = trim($nazwa);
+		$opis = trim($opis);
 		$poziom = (int)$poziom;
-		$opis = $this->escape($opis);
 		$kategoria = (int)$kategoria;
+		
+		$kat_row = $kategorie->get_one($kategoria);
+		if (empty($kat_row))
+			$ERRORS['czyny_add_kategoria_no_exists'] = '';
+
+		if ($poziom < 1 || $poziom > 3)
+			$ERRORS['czyny_poziom_1_3'] = '';
+		
+		if ($nazwa == '')
+			$ERRORS['czyny_nazwa_not_empty'] = '';
+		
+		if ($opis == '')
+			$ERRORS['czyny_opis_not_empty'] = '';
+		
+		if (count($ERRORS) > 0)
+			return;
+		
+		$nazwa = $this->escape($nazwa);
+		$opis = $this->escape($opis);
 		$this->query("INSERT INTO czyny(nazwa, poziom, opis, kategoria) VALUES ($nazwa, $poziom, $opis, $kategoria)");
 	}
 	
@@ -58,16 +109,33 @@ class Czyny extends DB {
 		if (!login_user_is_admin())
 			return;
 		$id = (int)$id;
+		
+		$nazwa = trim($nazwa);
+		$opis = trim($opis);
+		$poziom = (int)$poziom;
+		
 		$kategoria = (int)$kategoria;
 		$kat_row = $kategorie->get_one($kategoria);
 		if (empty($kat_row)) {
 			$ERRORS['czyny_add_kategoria_no_exists'] = '';
 			return;
 		}
+		
+		if ($poziom < 1 || $poziom > 3)
+			$ERRORS['czyny_poziom_1_3'] = '';
+		
+		if ($nazwa == '')
+			$ERRORS['czyny_nazwa_not_empty'] = '';
+		
+		if ($opis == '')
+			$ERRORS['czyny_opis_not_empty'] = '';
+		
+		if (count($ERRORS) > 0)
+			return;
+		
 		$nazwa = $this->escape($nazwa);
 		$poziom = (int)$poziom;
 		$opis = $this->escape($opis);
-		$kategoria = (int)$kategoria;
 		
 		$this->query("UPDATE czyny SET nazwa=$nazwa, poziom=$poziom, opis=$opis, kategoria=$kategoria WHERE id=$id");
 	}

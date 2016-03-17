@@ -1,0 +1,352 @@
+body {
+	font-family: Arial, sans-serif;
+	font-size: 12pt;
+	background: #d2e3ea url('img/bg.jpg') fixed no-repeat right bottom;
+}
+
+#content {
+	margin: 10px;
+}
+
+a {
+	color: #000;
+	text-decoration: underline;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+strong {
+	font-weight: bold;
+}
+
+p {
+	margin-top: 5px;
+}
+
+ul {
+	list-style-type: disc;
+	margin-left: 15px;
+}
+
+ul li {
+	margin-bottom: 8px;
+}
+
+textarea {
+	width: 200px;
+	height: 100px;
+}
+
+.row {
+	display: table-row;
+}
+
+.cell {
+	display: table-cell;
+}
+
+#main {
+	display: table;
+	width: 1000px;
+	margin: 0 auto;
+	table-layout: fixed;
+
+}
+
+#left, #right {
+	display: table-cell;
+	vertical-align: top;
+	overflow: auto;
+}
+
+#right {
+	padding: 0 10px;
+	background: rgba(199, 54, 54, 0.5); 
+	border-radius: 20px 20px 0 0;
+	border: 3px solid #000;
+	position: relative;
+	left: -3px;
+}
+
+
+#right h1 {
+	font-size: 110%;
+	font-weight: bold;
+	border-bottom: 1px solid black;
+	margin-top: 20px;
+}
+
+#lights {
+	position: relative;
+	width: 300px;
+	margin: 0 auto;
+}
+
+#lights a {
+	display: block;
+	position: absolute;
+	font-size: 10pt;
+}
+
+#belka {
+	border-bottom: 1px solid #000;
+	padding: 5px;
+	margin-bottom: 15px;
+	background: #bcdcea;
+}
+
+
+/*Piękna*/
+.lights1 #s1 {
+	top: 217px;
+	left: 132px;
+}
+
+.lights1 #s2 {
+	top: 144px;
+	left: 55px;
+	-webkit-transform: rotate(90deg);
+	-moz-transform: rotate(90deg);
+	-o-transform: rotate(90deg);
+	writing-mode: lr-tb;
+}
+
+.lights1 #s3 {
+	top: 144px;
+	left: 215px;
+	-webkit-transform: rotate(90deg);
+	-moz-transform: rotate(90deg);
+	-o-transform: rotate(90deg);
+	writing-mode: lr-tb;
+}
+
+.lights1 #s4 {
+	top: 69px;
+	left: 127px;
+}
+
+/*Prawdy*/
+.lights2 #s2 {
+	top: 217px;
+	left: 130px;
+}
+
+.lights2 #s4 {
+	top: 146px;
+	left: 58px;
+	-webkit-transform: rotate(90deg);
+	-moz-transform: rotate(90deg);
+	-o-transform: rotate(90deg);
+	writing-mode: lr-tb;
+}
+
+.lights2 #s1 {
+	top: 143px;
+	left: 206px;
+	-webkit-transform: rotate(90deg);
+	-moz-transform: rotate(90deg);
+	-o-transform: rotate(90deg);
+	writing-mode: lr-tb;
+}
+
+.lights2 #s3 {
+	top: 69px;
+	left: 138px;
+}
+
+/*Siły*/
+.lights3 #s3 {
+	top: 217px;
+	left: 141px;
+}
+
+.lights3 #s1 {
+	top: 146px;
+	left: 58px;
+	-webkit-transform: rotate(90deg);
+	-moz-transform: rotate(90deg);
+	-o-transform: rotate(90deg);
+	writing-mode: lr-tb;
+}
+
+.lights3 #s4 {
+	top: 143px;
+	left: 206px;
+	-webkit-transform: rotate(90deg);
+	-moz-transform: rotate(90deg);
+	-o-transform: rotate(90deg);
+	writing-mode: lr-tb;
+}
+
+.lights3 #s2 {
+	top: 69px;
+	left: 126px;
+}
+
+/*Miłości*/
+.lights4 #s4 {
+	top: 217px;
+	left: 134px;
+}
+
+.lights4 #s3 {
+	top: 146px;
+	left: 67px;
+	-webkit-transform: rotate(90deg);
+	-moz-transform: rotate(90deg);
+	-o-transform: rotate(90deg);
+	writing-mode: lr-tb;
+}
+
+.lights4 #s2 {
+	top: 142px;
+	left: 204px;
+	-webkit-transform: rotate(90deg);
+	-moz-transform: rotate(90deg);
+	-o-transform: rotate(90deg);
+	writing-mode: lr-tb;
+}
+
+.lights4 #s1 {
+	top: 69px;
+	left: 127px;
+}
+
+#light_desc {
+	font-size:10pt;
+}
+
+#light_desc strong {
+	display: block;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+#light_desc em {
+	display: block;
+	font-style: italic;
+	margin-bottom: 2px;
+}
+
+#light_content {
+	margin-top: -10px;
+	margin-left: 4px;
+	padding: 0.5em;
+	background-color: #ff0;
+	border: 3px solid #000;
+}
+
+
+.from_table_login {
+	margin-top: 140px;
+}
+.login_form {
+	margin: 0 auto;
+}
+
+.error {
+	margin: 10px;
+	margin-left: 0;
+	padding: 10px;
+	padding-left: 45px;
+	background: url(img/error.png) no-repeat 15px 5px #ff745f;
+	border: 2px solid #e00000;
+	border-radius: 20px;
+}
+
+.success {
+	margin: 10px;
+	margin-left: 0;
+	padding: 10px;
+	padding-left: 45px;
+	background: url(img/success.png) no-repeat 15px 7px #d5ffd5;
+	border: 2px solid #68b368;
+	border-radius: 20px;
+}
+
+.czyny_list {
+	margin-bottom: 10px;
+}
+
+.czyny_list h1 {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	font-weight: bold;
+	border-bottom: 1px solid #000;
+}
+
+.czyny_list h2 {
+	margin-top: 15px;
+	font-weight: bold;
+	font-size: 95%;
+}
+
+.czyny_list .cell {
+	vertical-align: top;
+	padding-right: 3px;
+}
+
+.czyny_list h3 {
+	font-weight: bold;
+	margin-top: 3px;
+	margin-bottom: 5px;
+	font-size: 95%;
+}
+
+.form_table .form, .form_table .fields {
+	display: table;
+}
+
+.form_table .form {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	background: #ffff3b;
+	padding: 10px;
+	border-radius: 10px;
+	border: 2px solid #bcbc00;
+}
+
+.form_table h1 {
+	font-weight: bold;
+	font-size: 130%;
+	margin-bottom: 5px;
+}
+
+.form_table td, th {
+	border: 1px solid #000;
+	padding: 5px;
+	vertical-align: middle;
+}
+
+.form_table th {
+	background: #ffff3b;
+}
+
+.form_table td {
+	background-color: #d2e3ea;
+}
+
+.form_table form div.cell {
+	padding-bottom: 5px;
+}
+
+.form_table .form div.cell:first-child {
+	vertical-align: top;
+}
+
+.form_table .form div.cell:first-child {
+	text-align: right;
+	padding-right: 5px;
+}
+
+.form_table .form div.cell:last-child {
+	text-align: left;
+}
+
+.cancel {
+	margin-left: 10px;
+	font-size: 80%;
+}
+

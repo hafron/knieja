@@ -35,13 +35,30 @@ class Harcerze extends DB {
 		if (!login_user_is_admin())
 			return;
 		
+		$pseudonim = trim($pseudonim);
+		$haslo = $haslo;
+		$email = trim($email);
+		$uprawnienia = (int)$uprawnienia;
+		
+		if ($pseudonim == '')
+			$ERRORS['users_no_pseudonim'] = '';
+		if ($haslo == '')
+			$ERRORS['users_no_haslo'] = '';
+		if ($email == '') 
+			$ERRORS['users_no_email'] = '';
+		elseif (!filter_var($email, FILTER_VALIDATE_EMAIL))
+			$ERRORS['users_email_invalid'] = '';
+		if ($uprawnienia != 0 && $uprawnienia != 5)
+			$ERRORS['users_uprawnienia_invalid'] = '';
+			
+		if (count($ERRORS) > 0)
+			return;
+		
 		$pseudonim = $this->escape($pseudonim);
 		$haslo = $this->escape(password_hash($haslo, PASSWORD_DEFAULT));
 		$email = $this->escape($email);
-		$uprawnienia = (int)$uprawnienia;
 		
 		$login_row = $this->querySingle("SELECT pseudonim FROM harcerze WHERE pseudonim=$pseudonim");
-		
 		if (!empty($login_row)) {
 			$ERRORS['users_user_exists'] = '';
 			return;
@@ -55,6 +72,18 @@ class Harcerze extends DB {
 		if (!login_user_is_admin())
 			return;
 		
+		$pseudonim = trim($pseudonim);
+		$email = trim($email);
+		$uprawnienia = (int)$uprawnienia;
+		
+		if ($email == '') 
+			$ERRORS['users_no_email'] = '';
+		elseif (!filter_var($email, FILTER_VALIDATE_EMAIL))
+			$ERRORS['users_email_invalid'] = '';
+		
+		if ($uprawnienia != 0 && $uprawnienia != 5)
+			$ERRORS['users_uprawnienia_invalid'] = '';
+		
 		$id = (int)$id;
 		$pseudonim_escaped = $this->escape($pseudonim);
 		$email = $this->escape($email);
@@ -64,27 +93,59 @@ class Harcerze extends DB {
 		$new_login_row = $this->querySingle("SELECT pseudonim FROM harcerze WHERE pseudonim=$pseudonim_escaped");
 		
 		//tylkow w przypadku zmiany pseudonimu sprawdzamy, czy nie ma powtórek
-		if ($login_row['pseudonim'] != $pseudonim && !empty($new_login_row)) {
+		if ($pseudonim == '')
+			$ERRORS['users_no_pseudonim'] = '';
+		elseif ($login_row['pseudonim'] != $pseudonim && !empty($new_login_row))
 			$ERRORS['users_user_exists'] = '';
+					
+		if (count($ERRORS) > 0)
 			return;
-		}
 		
 		$this->query("UPDATE harcerze SET pseudonim=$pseudonim_escaped, email=$email, uprawnienia=$uprawnienia WHERE id=$id");
 	}
 	
-	function change_password($id, $haslo) {
+	function change_password($haslo, $id=-1) {
+		global $ERRORS;
+		
 		$id = (int)$id;
 		//hasło może być zmienione przez samego użytkownika
 		$login_row = session_login_row();
-		if (!login_user_is_admin() && $login_row['id'] != $id)
+		if ($login_row == -1)
 			return;
+			
+		if ($id == -1 || !login_user_is_admin())
+			$id = $login_row['id'];
+
+		if ($haslo == '') {
+			$ERRORS['users_no_haslo'] = '';
+			return;
+		}
 		
 		$haslo = $this->escape(password_hash($haslo, PASSWORD_DEFAULT));
 		$this->query("UPDATE harcerze SET haslo=$haslo WHERE id=$id");
 	}
 	
+	function delete($id) {
+		global $ERRORS, $czyny_harcerze;
+		if (!login_user_is_admin())
+			return;
+		$id = (int)$id;
+		if ($czyny_harcerze->count_get_harcerz($id) > 0) {
+			$ERRORS['harcerze_delete_has_czyny'] = '';
+			return;
+		}
+		$this->query("DELETE FROM harcerze WHERE id=$id");
+	}
+	
 	function get_one($id) {
+		$id = (int)$id;
 		return $this->querySingle("SELECT id, pseudonim, email, uprawnienia FROM harcerze WHERE id=$id");
+	}
+	
+	function pseudonim($id) {
+		$id = (int)$id;
+		$row = $this->querySingle("SELECT pseudonim FROM harcerze WHERE id=$id");
+		return $row['pseudonim'];
 	}
 	
 	function get_users_list() {

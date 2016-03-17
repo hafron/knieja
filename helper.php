@@ -27,6 +27,11 @@ function error($value) {
 	return false;	
 }
 
+function set_error($name) {
+	global $ERRORS;
+	$ERRORS[$name] = '';
+}
+
 function login_user_is_admin() {
 	if (!isset($_SESSION['login_row']))
 		return false;

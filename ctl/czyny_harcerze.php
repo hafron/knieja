@@ -7,14 +7,21 @@ if (!login_user_is_admin()) {
 
 if (count($_POST) > 0) {
 	if (get('do') == 'zapisz') {
-		$czyny_harcerze->update(get('id'), value('harcerz'), value('czyn'), value('data'), value('osoba_przyznajaca'),
+		$czyny_harcerze->update(get('id'), value('harcerz'), value('czyn'), value('data_przyznania'), value('osoba_przyznajaca'),
 					value('uwagi'));
+		header('Location: ?action=czyny_harcerze&czyn='.value('czyn').'&swiatlo='.get('swiatlo').'&harcerz='.value('harcerz'));
 	} else {
-		$czyny_harcerze->add(value('harcerz'), value('czyn'), value('data'), value('osoba_przyznajaca'), value('uwagi'));
+		$czyny_harcerze->add(value('harcerz'), value('czyn'), value('data_przyznania'), value('osoba_przyznajaca'), value('uwagi'));
+		header('Location: ?action=czyny_harcerze&czyn='.value('czyn').'&swiatlo='.get('swiatlo').'&harcerz='.value('harcerz'));
 	}
 	if (count($ERRORS) == 0) {
 		clear_values();
 	}
+} else {
+	set_value('czyn', get('czyn'));
+	set_value('harcerz', get('harcerz'));
+	set_value('osoba_przyznajaca', $_SESSION['login_row']['id']);
+	set_value('data_przyznania', date('Y-m-d'));
 }
 
 switch (get('do')) {

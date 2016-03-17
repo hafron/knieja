@@ -14,6 +14,8 @@ if (count($_POST) > 0) {
 	if (count($ERRORS) == 0) {
 		clear_values();
 	}
+} else {
+	set_value('kategoria', get('kategoria'));
 }
 
 switch (get('do')) {
