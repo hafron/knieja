@@ -155,7 +155,7 @@
 	<?php else: ?>
 		<input type="submit" value="Dodaj" />
 	<?php endif ?>
-	<a href="?action=kategorie" class="cancel">Anuluj</a>
+	<a href="?action=czyny_harcerze&swiatlo=<?php echo get('swiatlo') ?>&harcerz=<?php echo get('harcerz') ?>" class="cancel">Anuluj</a>
 	</div>
 </form>
 
