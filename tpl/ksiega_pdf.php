@@ -151,7 +151,7 @@ genLight(4);
 
 // Close and output PDF document
 // This method has several options, check the source code documentation for more information.
-$pdf->Output('ksiega_czynow', 'I');
+$pdf->Output('ksiega_czynow.pdf', 'I');
 
 //============================================================+
 // END OF FILE
