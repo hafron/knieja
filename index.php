@@ -1,3 +1,6 @@
+<?php
+ob_start();
+?>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -33,7 +36,8 @@ $czyny_harcerze = new Czyny_Harcerze();
 	<a href="?action=wyloguj">Wyloguj</a>
 <?php else: ?>
 	<a href="?action=zaloguj">Zaloguj</a>
-<?php endif ?>
+<?php endif ?> |
+    <a href="?action=ksiega_pdf">Pobierz Księge Czynów</a>
 </div>
 
 
@@ -51,6 +55,8 @@ $ctl = function() {
 };
 $ctl();
 
+//start page rendering
+ob_flush();
 if (file_exists("tpl/$action.php"))
 	include "tpl/$action.php";
 

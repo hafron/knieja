@@ -16,7 +16,7 @@
 			<?php if($T['swiatlo'] == 1): ?>
 				<strong>Pierwsze Światło jest światłem Piękna:</strong>
 				<em>Zachowaj czystość siebie i miejsca, w którym żyjesz.</em>
-				<em>Znaj i szanuj swoje ciało, jest bowiem siedzibą Twego Ducha</em>
+				<em>Znaj i szanuj swoje ciało, jest bowiem siedzibą Twego Ducha.</em>
 				<em>Bądź przyjacielem wszystkich nieszkodliwych stworzeń.</em>
 				<em>Chroń drzewa i kwiaty oraz bądź gotów na walkę z pożarem w lesie i w mieście.</em>
 				<p>Czyny tego Światła ukierunkowane są na sprawniść fizyczną, umiejętności sportowe, podróżnicze, kondycyjne.</p>
