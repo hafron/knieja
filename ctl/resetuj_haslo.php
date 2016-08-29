@@ -7,12 +7,9 @@ if (count($_POST) > 0) {
 		$haslo = $harcerze->reset_password($harcerz['id']);
 		
 		my_mail($harcerz['email'], 'Hasło zresetowane',
-		"Hasło do twojego konta zostało zresetwane.
-		Twoje nowe hasło to: $haslo");
+		"Hasło do twojego konta zostało zresetwane. Twoje nowe hasło to: $haslo");
 		
-		var_dump($harcerz, $haslo);
-		
-		//header("Location: ?action=index&kom=haslo_zresetowane");
+		header("Location: ?action=index&kom=haslo_zresetowane");
 	} else {
 		$ERRORS['login_user_no_exists'] = '';
 	}
