@@ -88,13 +88,17 @@ function genLight($light) {
         $html .= ' </td>';
         $html .= ' <td width="88%">';
         $html .= '   <p>'.nl2br($czyn['opis']).'</p>';
-        $html .= '   <strong>Zdobywcy: </strong>';
+        
+        $zdobywcy_html = '';
 		$zdobywcy = $czyny_harcerze->get($czyn['id']);
 		while($zdobywca = $zdobywcy->fetchArray()) {
-			$html .= $zdobywca['pseudonim']. ', ';
+			$zdobywcy_html .= $zdobywca['pseudonim']. ', ';
 		}
-		//remove last ', ';
-		$html = substr($html, 0, -2);
+		if ($zdobywcy_html !== '') {
+			//remove last ', ';
+			$zdobywcy_html = substr($zdobywcy_html, 0, -2);
+			$html .= '<strong>Zdobywcy: </strong>'.$zdobywcy_html;
+		}
         $html .= ' </td>';
         $html .= '</tr></table>';
     }
