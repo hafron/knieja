@@ -91,8 +91,10 @@ function genLight($light) {
         $html .= '   <strong>Zdobywcy: </strong>';
 		$zdobywcy = $czyny_harcerze->get($czyn['id']);
 		while($zdobywca = $zdobywcy->fetchArray()) {
-			$html .= $zdobywca['pseudonim']. ' ,';
+			$html .= $zdobywca['pseudonim']. ', ';
 		}
+		//remove last ', ';
+		$html = substr($html, 0, -2);
         $html .= ' </td>';
         $html .= '</tr></table>';
     }
