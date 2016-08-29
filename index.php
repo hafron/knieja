@@ -28,7 +28,11 @@ $czyny_harcerze = new Czyny_Harcerze();
 <div id="belka">
 <?php if (session_login_row() != -1): ?>
 	Czuwaj <strong><?php echo $_SESSION['login_row']['pseudonim'] ?></strong>! | 
-	<a href="?action=index">Strona główna</a> | 
+<?php endif ?>
+
+<a href="?action=index">Strona główna</a> | 
+
+<?php if (session_login_row() != -1): ?>
 	<?php if (login_user_is_admin()): ?>
 		<a href="?action=harcerze">Zarządzaj harcerzami</a> | 
 	<?php endif ?>
@@ -37,7 +41,7 @@ $czyny_harcerze = new Czyny_Harcerze();
 <?php else: ?>
 	<a href="?action=zaloguj">Zaloguj</a>
 <?php endif ?> |
-    <a href="?action=ksiega_pdf">Pobierz Księge Czynów</a>
+    <a href="?action=ksiega_pdf">Księga Czynów PDF</a>
 </div>
 
 

@@ -1,8 +1,8 @@
 <?php
-function value($value) {
+function value($value, $default='') {
 	if (isset($_POST) && isset($_POST[$value]))
 		return $_POST[$value];
-	return '';
+	return $default;
 }
 
 function set_value($name, $value) {
@@ -46,4 +46,20 @@ function session_login_row() {
 	if (!isset($_SESSION['login_row']))
 		return -1;
 	return $_SESSION['login_row'];
+}
+
+function my_mail($to, $subject, $body, $URI='', $contentType = "text/plain") {
+	$subject="=?UTF-8?B?".base64_encode($subject)."?="; 
+	
+	if ($URI == '') {
+		$URI = $_SERVER['SERVER_NAME'];
+	}
+
+	$headers =  "From: noreply@$URI\r\n";
+	$headers .= "Content-Type: $contentType; charset=UTF-8\r\n";
+	if ($contentType != "text/plain")
+		$headers .= "MIME-Version: 1.0\r\n";
+	$headers .= "Content-Transfer-Encoding: 8bit\r\n";
+
+	mail($to, $subject, $body, $headers);
 }

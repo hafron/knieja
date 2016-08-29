@@ -125,6 +125,23 @@ class Harcerze extends DB {
 		$this->query("UPDATE harcerze SET haslo=$haslo WHERE id=$id");
 	}
 	
+	function reset_password($id) {
+		global $ERRORS;
+		
+		$id = (int)$id;
+		
+		//sprawdź czy harcerz istnieje
+		if ($this->pseudonim($id) === '') {
+			$ERRORS['harcerz_no_exists'] = '';
+			return;
+		}
+		$haslo_plain = substr(str_shuffle('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'), 0, 10);
+		$haslo = $this->escape(password_hash($haslo_plain, PASSWORD_DEFAULT));
+		$this->query("UPDATE harcerze SET haslo=$haslo WHERE id=$id");
+		
+		return $haslo_plain;
+	}
+	
 	function delete($id) {
 		global $ERRORS, $czyny_harcerze;
 		if (!login_user_is_admin())
@@ -142,10 +159,30 @@ class Harcerze extends DB {
 		return $this->querySingle("SELECT id, pseudonim, email, uprawnienia FROM harcerze WHERE id=$id");
 	}
 	
+	function get_one_by_pseudonim($pseudonim) {
+		$pseudonim_escaped = $this->escape($pseudonim);
+		
+		return $this->querySingle("SELECT id, pseudonim, email, uprawnienia FROM harcerze WHERE pseudonim=$pseudonim_escaped");
+	}
+	
 	function pseudonim($id) {
 		$id = (int)$id;
 		$row = $this->querySingle("SELECT pseudonim FROM harcerze WHERE id=$id");
-		return $row['pseudonim'];
+		if (count($row) > 0) {
+			return $row['pseudonim'];
+		} else {
+			return '';
+		}
+	}
+
+	function harcerz_exists($pseudonim) {
+		$pseudonim_escaped = $this->escape($pseudonim);
+		$row = $this->querySingle("SELECT pseudonim FROM harcerze WHERE pseudonim=$pseudonim_escaped");
+		if (count($row) === 1) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	function get_users_list() {

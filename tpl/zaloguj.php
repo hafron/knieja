@@ -25,6 +25,16 @@
 						<input id="haslo" name="haslo" type="password" />
 					</div>
 				</div>
+				<div class="row">
+					<div class="cell">
+						
+					</div>			
+					<div class="cell">
+						<a style="font-size:80%" href="?action=resetuj_haslo&pseudonim=<?php echo value('pseudonim') ?>">Zapomniałem hasła</a>
+					</div>
+				</div>
+
+
 			</div>
 		</div></div>
 		<div class="row"><div class="cell">

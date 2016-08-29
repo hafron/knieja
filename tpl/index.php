@@ -1,5 +1,7 @@
 <?php if (get('kom') == 'haslo_zmienione'): ?>
 	<div class="success">Hasło zostało zmienione</div>
+<?php elseif (get('kom') == 'haslo_zresetowane'): ?>
+	<div class="success">Hasło zostało zresetowane. Nowe hasło zostało wysłane na twój adres e-mail.</div>
 <?php endif ?>
 
 <div id="main">
