@@ -66,7 +66,7 @@ $pdf->setTextShadow(array('enabled'=>true, 'depth_w'=>0.2, 'depth_h'=>0.2, 'colo
 
 
 function genLight($light) {
-    global $czyny, $pdf;
+    global $czyny, $czyny_harcerze, $pdf;
     
     // Add a page
     // This method has several options, check the source code documentation for more information.
@@ -88,6 +88,11 @@ function genLight($light) {
         $html .= ' </td>';
         $html .= ' <td width="88%">';
         $html .= '   <p>'.nl2br($czyn['opis']).'</p>';
+        $html .= '   <strong>Zdobywcy: </strong>';
+		$zdobywcy = $czyny_harcerze->get($czyn['id']);
+		while($zdobywca = $zdobywcy->fetchArray()) {
+			$html .= $zdobywca['pseudonim']. ' ,';
+		}
         $html .= ' </td>';
         $html .= '</tr></table>';
     }
